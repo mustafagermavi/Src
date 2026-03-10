@@ -1,0 +1,59 @@
+:root {
+    --bg: #0a0a0b;
+    --card: #151517;
+    --primary: #00d084;
+    --text: #ffffff;
+}
+
+body {
+    margin: 0; font-family: 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text);
+}
+
+/* Auth Design */
+.auth-wrapper {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 20px; background: radial-gradient(circle at top right, #1a2a22, #0a0a0b);
+}
+
+.auth-box {
+    background: var(--card); padding: 40px 30px; border-radius: 30px;
+    width: 100%; max-width: 400px; text-align: center; border: 1px solid #222;
+}
+
+.auth-box span { color: var(--primary); }
+
+input {
+    width: 100%; padding: 15px; margin: 10px 0; background: #1c1c1e;
+    border: 1px solid #333; color: white; border-radius: 12px;
+}
+
+.btn-main {
+    width: 100%; padding: 15px; background: var(--primary);
+    border: none; border-radius: 12px; font-weight: bold; cursor: pointer;
+}
+
+/* Dashboard Design */
+.app-shell { padding: 20px; padding-bottom: 100px; }
+
+.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+
+.balance-card {
+    background: linear-gradient(135deg, #151517 0%, #000 100%);
+    padding: 40px 25px; border-radius: 32px; border: 1px solid #222; text-align: center;
+}
+
+.balance-card h1 { font-size: 42px; margin: 10px 0; color: var(--primary); }
+
+.actions { display: flex; gap: 15px; margin-top: 25px; }
+.actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; background: #222; color: white; }
+
+.plan-item {
+    background: var(--card); padding: 20px; border-radius: 20px;
+    display: flex; justify-content: space-between; align-items: center; margin-top: 15px;
+}
+
+.bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: #111; display: flex; justify-content: space-around; padding: 20px;
+}
