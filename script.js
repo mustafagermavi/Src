@@ -1,9 +1,9 @@
-// Import Firebase SDKs
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+// 1. Import Firebase Functions ژ سێرڤەرێن فەرمی یێن گوگل
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Your Firebase Configuration (Yên تە مە لێرە دانان)
+// 2. کلیلێن تە یێن تایبەت (Your Config)
 const firebaseConfig = {
   apiKey: "AIzaSyDOfmXC-fU_A3mvnSYWvYbagfvGdOWbdWA",
   authDomain: "hjkhss.firebaseapp.com",
@@ -14,12 +14,12 @@ const firebaseConfig = {
   measurementId: "G-C1GZKVJ273"
 };
 
-// Initialize Firebase
+// 3. Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// --- 1. Handle User Registration ---
+// --- [A] دروستکرنا حسابا نوی (Register) ---
 window.handleRegister = async () => {
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
@@ -31,21 +31,21 @@ window.handleRegister = async () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
-        // Create Initial User Data in Firestore
+        // پاشکەفتکرنا داتایێن دەسپێکێ د داتابەیسێ دا
         await setDoc(doc(db, "users", user.uid), {
             name: name,
-            balance: 50.00, // Welcome Bonus $50
+            balance: 50.00, // وەک دیاری $50 بۆ هەر کەسەکێ نوی
             email: email,
-            joinedAt: new Date()
+            createdAt: new Date()
         });
         
-        alert("Account Created Successfully!");
+        alert("Account Created! Welcome " + name);
     } catch (error) {
         alert("Error: " + error.message);
     }
 };
 
-// --- 2. Handle User Login ---
+// --- [B] چوونەژوورەوا ڕاستەقینە (Login) ---
 window.handleLogin = async () => {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
@@ -53,44 +53,44 @@ window.handleLogin = async () => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        alert("Login Failed: Check email or password");
+        alert("Login Failed: Please check your email/password");
     }
 };
 
-// --- 3. Auth State Observer (Checking if user is logged in) ---
+// --- [C] چاودێریا حالەتێ بەکارهێنەری (Auth Observer) ---
 onAuthStateChanged(auth, async (user) => {
-    const authContainer = document.getElementById('auth-container');
-    const dashboard = document.getElementById('app-dashboard');
+    const authUI = document.getElementById('auth-container');
+    const dashboardUI = document.getElementById('app-dashboard');
 
     if (user) {
-        // User is logged in
-        authContainer.style.display = 'none';
-        dashboard.style.display = 'block';
+        // ئەگەر یێ داخل بووی بیت
+        authUI.style.display = 'none';
+        dashboardUI.style.display = 'block';
         
-        // Fetch Real Data from Firestore
+        // وەرگرتنا داتایان ژ Firestore
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
         
         if (userSnap.exists()) {
-            const userData = userSnap.data();
-            document.getElementById('display-name').innerText = userData.name;
-            document.getElementById('user-balance').innerText = `$${userData.balance.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            const data = userSnap.data();
+            document.getElementById('display-name').innerText = data.name;
+            document.getElementById('user-balance').innerText = `$${data.balance.toLocaleString()}`;
         }
     } else {
-        // User is logged out
-        authContainer.style.display = 'flex';
-        dashboard.style.display = 'none';
+        // ئەگەر یێ دەرکەفتی بیت
+        authUI.style.display = 'flex';
+        dashboardUI.style.display = 'none';
     }
 });
 
-// --- 4. Handle Logout ---
+// --- [D] دەرکەفتن (Logout) ---
 window.handleLogout = () => {
     signOut(auth).then(() => {
-        location.reload(); // Refresh page after logout
+        alert("Logged out!");
     });
 };
 
-// Toggle between Login and Register views
+// گۆهرینا شاشێ د ناڤبەرا Login و Register
 window.toggleAuth = () => {
     const lForm = document.getElementById('login-form');
     const rForm = document.getElementById('register-form');
