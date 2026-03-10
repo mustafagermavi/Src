@@ -2,65 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteInvest | Real-Time Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quantum Capital | Professional HYIP</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="auth-container" class="auth-wrapper">
-        <div class="auth-box">
-            <h2><i class="fa-solid fa-shield-halved"></i> Elite<span>Invest</span></h2>
+    <div id="auth-container" class="auth-overlay">
+        <div class="glass-auth-card">
+            <div class="auth-header">
+                <div class="neon-logo">Q<span>P</span></div>
+                <h2>Next-Gen Investing</h2>
+            </div>
             <div id="login-form">
-                <input type="email" id="login-email" placeholder="Email">
-                <input type="password" id="login-password" placeholder="Password">
-                <button class="btn-main" onclick="handleLogin()">Sign In</button>
-                <p>New here? <span onclick="toggleAuth()">Create Account</span></p>
+                <div class="input-group">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="Email Address">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="Password">
+                </div>
+                <button class="btn-neon" onclick="handleLogin()">Login to Dashboard</button>
+                <p class="toggle-p">New? <span onclick="toggleAuth()">Create Account</span></p>
             </div>
             <div id="register-form" style="display:none;">
-                <input type="text" id="reg-name" placeholder="Full Name">
-                <input type="email" id="reg-email" placeholder="Email">
-                <input type="password" id="reg-password" placeholder="Password">
-                <button class="btn-main" onclick="handleRegister()">Register</button>
-                <p>Have an account? <span onclick="toggleAuth()">Login</span></p>
+                <input type="text" id="reg-name" placeholder="Full Name" class="glass-input">
+                <input type="email" id="reg-email" placeholder="Email" class="glass-input">
+                <input type="password" id="reg-password" placeholder="Password" class="glass-input">
+                <button class="btn-neon" onclick="handleRegister()">Register Now</button>
+                <p class="toggle-p">Have account? <span onclick="toggleAuth()">Login</span></p>
             </div>
         </div>
     </div>
 
-    <div id="app-dashboard" class="app-shell" style="display:none;">
-        <header class="main-header">
-            <div class="user-info">
-                <img src="https://ui-avatars.com/api/?name=User" id="user-img">
-                <span id="display-name">Loading...</span>
+    <div id="app-dashboard" class="app-container" style="display:none;">
+        <header class="dashboard-header">
+            <div class="user-profile">
+                <div class="avatar-ring"><img src="https://ui-avatars.com/api/?name=User&background=00ff88&color=000" id="user-img"></div>
+                <div class="user-txt">
+                    <small>Welcome back,</small>
+                    <h4 id="display-name">Investor</h4>
+                </div>
             </div>
-            <button onclick="handleLogout()" class="logout-btn"><i class="fa-solid fa-power-off"></i></button>
+            <button class="logout-icon" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </header>
 
-        <section class="balance-card">
-            <p>Net Balance (USDT)</p>
-            <h1 id="user-balance">$0.00</h1>
-            <div class="actions">
-                <button onclick="showSheet('deposit')"><i class="fa-solid fa-plus"></i> Deposit</button>
-                <button onclick="showSheet('withdraw')"><i class="fa-solid fa-minus"></i> Withdraw</button>
+        <section class="main-card">
+            <div class="balance-labels">
+                <span>Total Portfolio Value</span>
+                <h1 id="user-balance">$0.00</h1>
+                <div class="live-indicator"><span class="dot"></span> Live Updates</div>
+            </div>
+            <div class="quick-actions">
+                <button class="action-btn" onclick="showDeposit()"><i class="fa-solid fa-wallet"></i> Deposit</button>
+                <button class="action-btn outline" onclick="showWithdraw()"><i class="fa-solid fa-paper-plane"></i> Withdraw</button>
             </div>
         </section>
 
-        <section class="plans">
-            <h3>Active Portfolios</h3>
-            <div class="plan-item gold" onclick="invest('Gold', 5.0)">
-                <div class="plan-text">
-                    <h4>Gold Strategy</h4>
-                    <p>5% Daily Profit</p>
+        <div class="market-ticker">
+            <div class="ticker-item">BTC <span class="green">▲ 2.4%</span></div>
+            <div class="ticker-item">ETH <span class="green">▲ 1.8%</span></div>
+            <div class="ticker-item">USDT <span class="gray">0.0%</span></div>
+        </div>
+
+        <section class="portfolios">
+            <div class="section-title">
+                <h3>Investment Plans</h3>
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+            <div class="plan-grid">
+                <div class="plan-card glass-effect gold" onclick="invest('Gold', 5.5)">
+                    <div class="plan-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
+                    <h4>Flash Gold</h4>
+                    <div class="roi">5.5% <span>/Day</span></div>
+                    <p>Min: $500</p>
                 </div>
-                <div class="plan-icon"><i class="fa-solid fa-gem"></i></div>
+                <div class="plan-card glass-effect silver" onclick="invest('Silver', 2.8)">
+                    <div class="plan-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4>Safe Silver</h4>
+                    <div class="roi">2.8% <span>/Day</span></div>
+                    <p>Min: $100</p>
+                </div>
             </div>
         </section>
 
         <nav class="bottom-nav">
-            <div class="nav-link active"><i class="fa-solid fa-house"></i></div>
-            <div class="nav-link"><i class="fa-solid fa-chart-pie"></i></div>
-            <div class="nav-link"><i class="fa-solid fa-wallet"></i></div>
+            <div class="nav-item active"><i class="fa-solid fa-house-chimney"></i><span>Home</span></div>
+            <div class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Trade</span></div>
+            <div class="nav-item"><i class="fa-solid fa-receipt"></i><span>History</span></div>
+            <div class="nav-item"><i class="fa-solid fa-user-gear"></i><span>Settings</span></div>
         </nav>
     </div>
 
