@@ -1,59 +1,86 @@
 :root {
-    --bg: #0a0a0b;
-    --card: #151517;
-    --primary: #00d084;
-    --text: #ffffff;
+    --primary: #00ff88; /* Neon Green */
+    --accent: #00e5ff;
+    --bg-dark: #050505;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
-    margin: 0; font-family: 'Segoe UI', sans-serif;
-    background: var(--bg); color: var(--text);
+    margin: 0; font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-dark); color: #fff;
+    overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
 
-/* Auth Design */
-.auth-wrapper {
+/* Glassmorphism Auth */
+.auth-overlay {
     height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 20px; background: radial-gradient(circle at top right, #1a2a22, #0a0a0b);
+    background: radial-gradient(circle at top right, #004d33, #050505);
 }
 
-.auth-box {
-    background: var(--card); padding: 40px 30px; border-radius: 30px;
-    width: 100%; max-width: 400px; text-align: center; border: 1px solid #222;
+.glass-auth-card {
+    background: var(--glass); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); padding: 40px;
+    border-radius: 40px; width: 90%; max-width: 400px; text-align: center;
 }
 
-.auth-box span { color: var(--primary); }
+.neon-logo { font-size: 32px; font-weight: 900; color: var(--primary); text-shadow: 0 0 15px var(--primary); }
+.neon-logo span { color: #fff; }
 
-input {
-    width: 100%; padding: 15px; margin: 10px 0; background: #1c1c1e;
-    border: 1px solid #333; color: white; border-radius: 12px;
+.input-group {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+    margin: 15px 0; border-radius: 15px; display: flex; align-items: center; padding: 0 15px;
+}
+.input-group input { background: none; border: none; padding: 15px; color: #fff; width: 100%; outline: none; }
+.input-group i { color: var(--primary); }
+
+.btn-neon {
+    width: 100%; padding: 18px; border-radius: 15px; border: none;
+    background: var(--primary); color: #000; font-weight: 800;
+    box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3); cursor: pointer;
 }
 
-.btn-main {
-    width: 100%; padding: 15px; background: var(--primary);
-    border: none; border-radius: 12px; font-weight: bold; cursor: pointer;
+/* Main App Layout */
+.app-container { padding: 20px; padding-bottom: 100px; }
+
+.main-card {
+    background: linear-gradient(135deg, #111, #000); padding: 35px 25px;
+    border-radius: 35px; border: 1px solid var(--glass-border); position: relative;
+    overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
 }
 
-/* Dashboard Design */
-.app-shell { padding: 20px; padding-bottom: 100px; }
-
-.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-
-.balance-card {
-    background: linear-gradient(135deg, #151517 0%, #000 100%);
-    padding: 40px 25px; border-radius: 32px; border: 1px solid #222; text-align: center;
+.main-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 70%);
 }
 
-.balance-card h1 { font-size: 42px; margin: 10px 0; color: var(--primary); }
+#user-balance { font-size: 48px; font-weight: 800; margin: 10px 0; letter-spacing: -1px; }
 
-.actions { display: flex; gap: 15px; margin-top: 25px; }
-.actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; background: #222; color: white; }
-
-.plan-item {
-    background: var(--card); padding: 20px; border-radius: 20px;
-    display: flex; justify-content: space-between; align-items: center; margin-top: 15px;
+.action-btn {
+    padding: 14px 25px; border-radius: 14px; border: none; font-weight: 700;
+    cursor: pointer; flex: 1; transition: 0.3s;
 }
+.action-btn { background: #fff; color: #000; }
+.action-btn.outline { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--glass-border); }
 
+/* Plan Grid */
+.plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.plan-card {
+    padding: 25px 15px; border-radius: 25px; text-align: center;
+    border: 1px solid var(--glass-border); transition: 0.3s;
+}
+.plan-card.gold { border-bottom: 4px solid #ffd700; }
+.plan-card.silver { border-bottom: 4px solid #c0c0c0; }
+
+.roi { font-size: 24px; font-weight: 800; color: var(--primary); }
+
+/* Navigation */
 .bottom-nav {
-    position: fixed; bottom: 0; left: 0; width: 100%;
-    background: #111; display: flex; justify-content: space-around; padding: 20px;
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 85px;
+    background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px);
+    display: flex; justify-content: space-around; align-items: center;
+    border-top: 1px solid var(--glass-border); padding-bottom: 20px;
 }
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 12px; }
+.nav-item.active { color: var(--primary); }
+.nav-item i { font-size: 22px; margin-bottom: 4px; }
